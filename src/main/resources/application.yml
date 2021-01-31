@@ -17,7 +17,7 @@ spring:
     #redis连接端口号
     port: 6379
     #redis连接密码
-#    password: 123456
+    #    password: 123456
     # Redis 数据库索引（默认为 0）
     database: 0
     #redis连接超时时间（毫秒）
@@ -55,6 +55,9 @@ jwt:
 # mongodb开启Debug模式
 # MongoRepository
 logging:
+  #控制台日志配置
+  #  pattern:
+  #    console: "[%thread] %-5level %logger{36} - %msg%n"
   level:
     org:
       springframework:
@@ -62,6 +65,8 @@ logging:
           mongodb:
             repository: DEBUG
             core: DEBUG
+
+
 
 # 配置pagehelper参数
 pagehelper:

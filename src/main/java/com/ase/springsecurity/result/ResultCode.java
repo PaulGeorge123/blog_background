@@ -1,7 +1,5 @@
 package com.ase.springsecurity.result;
 
-import net.sf.jsqlparser.schema.Database;
-
 /**
  * @author gyhstart
  * @create 2020/11/29 - 22:39

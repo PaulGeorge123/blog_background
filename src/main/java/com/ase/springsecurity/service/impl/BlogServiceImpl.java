@@ -116,6 +116,20 @@ public class BlogServiceImpl implements BlogService {
     }
 
     /**
+     * MongoDB 查询博客数
+     *
+     * @return
+     */
+    @Override
+    public Result queryBlogCount() {
+        long count = mongoTemplate.count(new Query(new Criteria()), Blog.class);
+        if (count > 0) {
+            return Result.success(count);
+        }
+        return Result.failure(ResultCode.DATABASE_HAS_QUERY_ERROR,count);
+    }
+
+    /**
      * MongoDB 查询所有
      *
      * @return

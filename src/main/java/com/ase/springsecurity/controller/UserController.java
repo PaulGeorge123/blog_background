@@ -141,7 +141,6 @@ public class UserController {
         return Result.success(pageInfo);
     }
 
-
     /**
      * MySQL 查询用户 (分页)
      *
@@ -158,4 +157,15 @@ public class UserController {
         return Result.success(pageInfo);
     }
 
+
+    /**
+     * MySQL 查询用户数
+     *
+     * @return
+     */
+    @GetMapping("/queryUserCount")
+    @ApiOperation(value = "查询用户数", notes = "接口的详情描述")
+    public Result queryUserCount() {
+       return userService.queryUserCount();
+    }
 }

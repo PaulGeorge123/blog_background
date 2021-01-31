@@ -5,6 +5,7 @@ import com.ase.springsecurity.entity.UserExample;
 import com.ase.springsecurity.entity.vo.ConditionsVo;
 import com.ase.springsecurity.mapper.UserMapper;
 import com.ase.springsecurity.result.Result;
+import com.ase.springsecurity.result.ResultCode;
 import com.ase.springsecurity.service.UserService;
 import com.ase.springsecurity.utils.RedisUtil;
 import lombok.extern.log4j.Log4j2;
@@ -213,9 +214,9 @@ public class UserServiceImpl implements UserService {
      * @param ids
      */
     @Override
-    public Result removeUserList(List<Integer> ids,int num) {
+    public Result removeUserList(List<Integer> ids, int num) {
         List<Integer> idList = new ArrayList<>();
-        for (int id:ids){
+        for (int id : ids) {
             idList.add(id);
         }
         UserExample example = new UserExample();
@@ -247,24 +248,39 @@ public class UserServiceImpl implements UserService {
         logicRemoveList.add(1);
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
-        if(!String.valueOf(conditionsVo.getGender()).equals("")){
-            if (conditionsVo.getGender() == 2){
+        if (!String.valueOf(conditionsVo.getGender()).equals("")) {
+            if (conditionsVo.getGender() == 2) {
                 criteria.andGenderIn(genderList);
-            }else {
+            } else {
                 criteria.andGenderEqualTo(conditionsVo.getGender());
             }
         }
-        if(conditionsVo.getRole() != null && !conditionsVo.getRole().isEmpty()){
+        if (conditionsVo.getRole() != null && !conditionsVo.getRole().isEmpty()) {
             criteria.andRoleEqualTo(conditionsVo.getRole());
         }
-        if(!String.valueOf(conditionsVo.getLogicRemove()).equals("")){
-            if (conditionsVo.getLogicRemove() == 2){
+        if (!String.valueOf(conditionsVo.getLogicRemove()).equals("")) {
+            if (conditionsVo.getLogicRemove() == 2) {
                 criteria.andLogicRemoveIn(logicRemoveList);
-            }else {
+            } else {
                 criteria.andLogicRemoveEqualTo(conditionsVo.getLogicRemove());
             }
         }
         return userMapper.selectByExample(example);
+    }
+
+    /**
+     * MySQL 查询用户数
+     *
+     * @return
+     */
+    @Override
+    public Result queryUserCount() {
+        UserExample example = new UserExample();
+        int count = userMapper.countByExample(example);
+        if (count > 0) {
+            return Result.success(count);
+        }
+        return Result.failure(ResultCode.DATABASE_HAS_QUERY_ERROR,count);
     }
 
 }

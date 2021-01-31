@@ -89,4 +89,11 @@ public interface UserService {
      * @return
      */
     List<User> queryUserByConditions(ConditionsVo conditionsVo);
+
+    /**
+     * MySQL 查询用户数
+     *
+     * @return
+     */
+    Result queryUserCount();
 }

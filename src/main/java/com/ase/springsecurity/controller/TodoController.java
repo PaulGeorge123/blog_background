@@ -56,6 +56,7 @@ public class TodoController {
     @ApiOperation(value = "查询待办事项(分页)", notes = "接口的详情描述")
     public Result queryTodoPaging(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                   @RequestParam(value = "pageSize", defaultValue = "7") int pageSize) {
+//        String orderBy="status ASC,dateday DESC";
         PageHelper.startPage(pageNum, pageSize);
         List<Todo> todoList = todoService.queryAllTodo();
         PageInfo<Todo> pageInfo = new PageInfo<>(todoList);

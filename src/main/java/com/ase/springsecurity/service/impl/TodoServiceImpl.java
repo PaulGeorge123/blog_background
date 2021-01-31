@@ -33,12 +33,12 @@ public class TodoServiceImpl implements TodoService {
     public Result saveTodo(Todo todo) {
         todo.setDateday(new Date());
         todo.setLogicRemove(1);
-        todo.setStatus(0);
+        todo.setStatus(1);
         int insertTodo = todoMapper.insert(todo);
         if (insertTodo == 1) {
             return Result.success(ResultCode.SUCCESS);
         }
-        return Result.failure(ResultCode.SERVER_HAS_COLLAPSE,0);
+        return Result.failure(ResultCode.SERVER_HAS_COLLAPSE, 0);
     }
 
     /**
@@ -57,7 +57,7 @@ public class TodoServiceImpl implements TodoService {
         if (remove == 1) {
             return Result.success(ResultCode.SUCCESS);
         }
-        return Result.failure(ResultCode.SERVER_HAS_COLLAPSE,0);
+        return Result.failure(ResultCode.SERVER_HAS_COLLAPSE, 0);
 
     }
 
@@ -71,7 +71,7 @@ public class TodoServiceImpl implements TodoService {
         TodoExample example = new TodoExample();
         TodoExample.Criteria criteria = example.createCriteria();
         criteria.andLogicRemoveEqualTo(1);
-        example.setOrderByClause("`dateday` DESC");
+        example.setOrderByClause("`status` ASC,`dateday` DESC");
         return todoMapper.selectByExample(example);
     }
 
@@ -93,6 +93,6 @@ public class TodoServiceImpl implements TodoService {
         if (modify == 1) {
             return Result.success(ResultCode.SUCCESS);
         }
-        return Result.failure(ResultCode.SERVER_HAS_COLLAPSE,0);
+        return Result.failure(ResultCode.SERVER_HAS_COLLAPSE, 0);
     }
 }

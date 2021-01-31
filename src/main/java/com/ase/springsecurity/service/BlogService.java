@@ -51,4 +51,11 @@ public interface BlogService {
      * @return
      */
     Result queryBlogById(Long id);
+
+    /**
+     * MongoDB 查询博客数
+     *
+     * @return
+     */
+    Result queryBlogCount();
 }

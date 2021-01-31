@@ -16,7 +16,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 @SpringBootApplication
 @MapperScan("com.ase.springsecurity.mapper")
 //exclude表示自动配置时不包括Multipart配置
-@EnableAutoConfiguration(exclude = {MultipartAutoConfiguration.class})
+//@EnableAutoConfiguration(exclude = {MultipartAutoConfiguration.class})
 public class SpringsecurityApplication {
 
     public static void main(String[] args) {
