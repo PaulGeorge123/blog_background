@@ -33,4 +33,5 @@ public class Blog {
     private int collection; //收藏
     private int attention; //关注
     private int browse; //浏览
+    private int authorId; //作者ID
 }

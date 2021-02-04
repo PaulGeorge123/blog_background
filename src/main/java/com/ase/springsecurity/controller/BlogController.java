@@ -4,6 +4,7 @@ import com.ase.springsecurity.entity.mongodb.Blog;
 import com.ase.springsecurity.entity.vo.SearchVo;
 import com.ase.springsecurity.result.Result;
 import com.ase.springsecurity.service.BlogService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * @create 2020/12/27 - 22:39
  **/
 @Log4j2
+@Api(value = "博客相关接口", tags = "BlogController")
 @RestController
 @RequestMapping("mongodb")
 public class BlogController {
@@ -89,6 +91,32 @@ public class BlogController {
                                  @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                  @RequestParam(value = "pageSize", defaultValue = "7") int pageSize) {
         return blogService.queryFuzzyBlogMongoDB(searchVo, pageNum, pageSize);
+    }
+
+    /**
+     * MongoDB 模糊查询title
+     *
+     * @return
+     */
+    @PostMapping("/queryByTitleBlogList")
+    @ApiOperation(value = "模糊查询title", notes = "接口的详情描述")
+    public Result queryByTitleBlogList(@RequestParam String title,
+                                       @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                       @RequestParam(value = "pageSize", defaultValue = "7") int pageSize) {
+        return blogService.queryByTitleBlogMongoDB(title, pageNum, pageSize);
+    }
+
+    /**
+     * MongoDB 精准查询（作者）
+     *
+     * @return
+     */
+    @GetMapping("/queryByAuthorBlogList")
+    @ApiOperation(value = "精准查询（作者）", notes = "接口的详情描述")
+    public Result queryByAuthorBlogList(@RequestParam("authorId") int authorId,
+                                        @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                        @RequestParam(value = "pageSize", defaultValue = "7") int pageSize) {
+        return blogService.queryByAuthorBlogList(authorId, pageNum, pageSize);
     }
 
     /**

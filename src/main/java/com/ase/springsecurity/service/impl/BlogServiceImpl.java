@@ -43,6 +43,7 @@ public class BlogServiceImpl implements BlogService {
             Blog blogSave = new Blog()
                     .setTitle(blog.getTitle())
                     .setContent(blog.getContent())
+                    .setAuthorId(blog.getAuthorId())
                     .setAuthor(blog.getAuthor())
                     .setDatetime(new Date())
                     .setCategory(blog.getCategory())
@@ -82,7 +83,8 @@ public class BlogServiceImpl implements BlogService {
         Update update = new Update()
                 .set("title", blog.getTitle())
                 .set("content", blog.getContent())
-                .set("author", blog.getAuthor())
+//                .set("author", blog.getAuthor())
+                .set("authorId",blog.getAuthorId())
                 .set("datetime", new Date())
                 .set("category", blog.getCategory())
                 .set("thumb_up", blog.getThumb_up())
@@ -90,7 +92,7 @@ public class BlogServiceImpl implements BlogService {
                 .set("attention", blog.getAttention())
                 .set("browse", blog.getBrowse());
         //更新查询返回的结果集的第一条数据
-        UpdateResult result = mongoTemplate.updateFirst(query, update, Blog.class);
+        UpdateResult result = mongoTemplate.upsert(query, update, Blog.class);
         //更新查询到的所有结果集
         //UpdateResult allResult = mongoTemplate.updateMulti(query,update,User.class);
         if (result != null) {
@@ -126,7 +128,34 @@ public class BlogServiceImpl implements BlogService {
         if (count > 0) {
             return Result.success(count);
         }
-        return Result.failure(ResultCode.DATABASE_HAS_QUERY_ERROR,count);
+        return Result.failure(ResultCode.DATABASE_HAS_QUERY_ERROR, count);
+    }
+
+    /**
+     * MongoDB 精准查询（作者）
+     *
+     * @return
+     */
+    @Override
+    public Result queryByAuthorBlogList(int authorId, int pageNum, int pageSize) {
+        Query query = new Query();
+        Criteria criteria = new Criteria();
+        query.addCriteria(criteria.and("authorId").is(authorId));
+        return conditionsPagingResult(pageNum, pageSize, query);
+    }
+
+    /**
+     * MongoDB 模糊查询title
+     *
+     * @return
+     */
+    @Override
+    public Result queryByTitleBlogMongoDB(String title, int pageNum, int pageSize) {
+        Query query = new Query();
+        Criteria criteria = new Criteria();
+        Pattern pattern = Pattern.compile("^.*" + title + ".*$", Pattern.CASE_INSENSITIVE);
+        query.addCriteria(criteria.and("title").regex(pattern));
+        return conditionsPagingResult(pageNum, pageSize, query);
     }
 
     /**
@@ -167,6 +196,7 @@ public class BlogServiceImpl implements BlogService {
 
     /**
      * 分页条件查询
+     *
      * @param pageNum
      * @param pageSize
      * @param query
@@ -177,7 +207,6 @@ public class BlogServiceImpl implements BlogService {
         List<Blog> blogList = mongoTemplate.find(query, Blog.class);
         long count = mongoTemplate.count(query, Blog.class);
         PageHelper pageHelper = mongoUtil.pageHelper(count, blogList);
-        System.out.println(pageHelper);
         if (pageHelper != null) {
             return Result.success(pageHelper);
         } else {

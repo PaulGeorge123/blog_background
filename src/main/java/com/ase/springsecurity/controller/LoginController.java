@@ -4,6 +4,7 @@ import com.ase.springsecurity.entity.User;
 import com.ase.springsecurity.result.Result;
 import com.ase.springsecurity.result.ResultCode;
 import com.ase.springsecurity.service.UserService;
+import io.swagger.annotations.Api;
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.Map;
  * @create 2020/11/27 - 21:51
  **/
 @Log4j2
+@Api(value = "登录相关接口", tags = "LoginController")
 @RestController
 public class LoginController {
 

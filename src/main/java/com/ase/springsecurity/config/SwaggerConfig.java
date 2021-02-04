@@ -41,6 +41,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("Swagger3接口文档测试")
                 .description("文档描述：更多问题，请联系开发者")
+                .termsOfServiceUrl("http://localhost:8090")
                 .contact(new Contact("name", "作者网站(url)", "123456"))
                 .version("1.0")
                 .build();

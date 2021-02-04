@@ -166,6 +166,7 @@ public class FileUpAndDownServiceImpl implements FileUpAndDownService {
         String title = param.getString("title");
         String username = param.getString("username");
         String category = param.getString("category");
+        int authorId = Integer.parseInt(param.getString("authorId"));
         //文件保存路径  D:\ideaWorkspace\UploadData\markdown\xxx.md
         String filepath = config.getMarkdownPath() + "/" + title + ".md";
 //        resMap.put("content",content);
@@ -177,6 +178,7 @@ public class FileUpAndDownServiceImpl implements FileUpAndDownService {
                 .setAuthor(username)
                 .setDatetime(new Date())
                 .setCategory(category)
+                .setAuthorId(authorId)
                 .setThumb_up(0)
                 .setCollection(0)
                 .setAttention(0)

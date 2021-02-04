@@ -174,9 +174,12 @@ public class UserServiceImpl implements UserService {
         criteria.andNicknameEqualTo(nickName);
         User user = new User();
         user.setPassword(newPassword);
+        user.setDatetimes(new Date());
         int modifyPasswordResult = userMapper.updateByExampleSelective(user, example);
+        List<User> userList = userMapper.selectByExample(example);
+        User userInfo = userList.get(0);
         if (modifyPasswordResult > 0) {
-            return Result.success(modifyPasswordResult);
+            return Result.success(userInfo);
         }
         return Result.success(false);
     }

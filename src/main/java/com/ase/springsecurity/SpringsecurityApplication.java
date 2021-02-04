@@ -1,5 +1,6 @@
 package com.ase.springsecurity;
 
+import lombok.extern.log4j.Log4j2;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 /**
  * @author Curry
  */
+@Log4j2
 @SpringBootApplication
 @MapperScan("com.ase.springsecurity.mapper")
 //exclude表示自动配置时不包括Multipart配置
@@ -21,6 +23,9 @@ public class SpringsecurityApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringsecurityApplication.class, args);
+
+        log.info("========================= 启动完毕 =========================");
+        log.info("http://localhost:8090/swagger-ui.html");
     }
 
 

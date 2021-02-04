@@ -5,6 +5,7 @@ import com.ase.springsecurity.result.Result;
 import com.ase.springsecurity.service.TodoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
  **/
 
 @RestController
+@Api(value = "待办事项相关接口", tags = "TodoController")
 @RequestMapping("todo")
 public class TodoController {
 

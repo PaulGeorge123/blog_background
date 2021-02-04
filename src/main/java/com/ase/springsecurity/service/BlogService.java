@@ -58,4 +58,18 @@ public interface BlogService {
      * @return
      */
     Result queryBlogCount();
+
+    /**
+     * MongoDB 精准查询（作者）
+     *
+     * @return
+     */
+    Result queryByAuthorBlogList(int authorId, int pageNum, int pageSize);
+
+    /**
+     * MongoDB 模糊查询title
+     *
+     * @return
+     */
+    Result queryByTitleBlogMongoDB(String title, int pageNum, int pageSize);
 }
