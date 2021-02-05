@@ -84,7 +84,7 @@ public class BlogServiceImpl implements BlogService {
                 .set("title", blog.getTitle())
                 .set("content", blog.getContent())
 //                .set("author", blog.getAuthor())
-                .set("authorId",blog.getAuthorId())
+                .set("authorId", blog.getAuthorId())
                 .set("datetime", new Date())
                 .set("category", blog.getCategory())
                 .set("thumb_up", blog.getThumb_up())
@@ -141,7 +141,8 @@ public class BlogServiceImpl implements BlogService {
         Query query = new Query();
         Criteria criteria = new Criteria();
         query.addCriteria(criteria.and("authorId").is(authorId));
-        return conditionsPagingResult(pageNum, pageSize, query);
+        long count = mongoTemplate.count(query, Blog.class);
+        return conditionsPagingResult(pageNum, pageSize, count, query);
     }
 
     /**
@@ -155,7 +156,8 @@ public class BlogServiceImpl implements BlogService {
         Criteria criteria = new Criteria();
         Pattern pattern = Pattern.compile("^.*" + title + ".*$", Pattern.CASE_INSENSITIVE);
         query.addCriteria(criteria.and("title").regex(pattern));
-        return conditionsPagingResult(pageNum, pageSize, query);
+        long count = mongoTemplate.count(query, Blog.class);
+        return conditionsPagingResult(pageNum, pageSize, count, query);
     }
 
     /**
@@ -166,7 +168,8 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Result queryAllBlogMongoDB(int pageNum, int pageSize) {
         Query query = new Query(new Criteria());
-        return conditionsPagingResult(pageNum, pageSize, query);
+        long count = mongoTemplate.count(query, Blog.class);
+        return conditionsPagingResult(pageNum, pageSize, count, query);
     }
 
     /**
@@ -191,7 +194,8 @@ public class BlogServiceImpl implements BlogService {
             Pattern pattern = Pattern.compile("^.*" + searchVo.getAuthor() + ".*$", Pattern.CASE_INSENSITIVE);
             query.addCriteria(criteria.and("title").regex(pattern));
         }
-        return conditionsPagingResult(pageNum, pageSize, query);
+        long count = mongoTemplate.count(query, Blog.class);
+        return conditionsPagingResult(pageNum, pageSize, count, query);
     }
 
     /**
@@ -202,10 +206,9 @@ public class BlogServiceImpl implements BlogService {
      * @param query
      * @return
      */
-    private Result conditionsPagingResult(int pageNum, int pageSize, Query query) {
+    private Result conditionsPagingResult(int pageNum, int pageSize, long count, Query query) {
         mongoUtil.start(pageNum, pageSize, query);
         List<Blog> blogList = mongoTemplate.find(query, Blog.class);
-        long count = mongoTemplate.count(query, Blog.class);
         PageHelper pageHelper = mongoUtil.pageHelper(count, blogList);
         if (pageHelper != null) {
             return Result.success(pageHelper);

@@ -66,7 +66,11 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Result saveUser(User user) {
-        user.setPassword("1qaz!QAZ");
+        user.setNickname(user.getNickname());
+        user.setUsername(user.getUsername());
+        user.setRole(user.getRole());
+        user.setGender(user.getGender());
+        user.setPassword(user.getPassword());
         user.setLogicRemove(1);
         user.setDatetimes(new Date());
         int insert = userMapper.insert(user);
