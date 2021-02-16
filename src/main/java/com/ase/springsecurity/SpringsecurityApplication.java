@@ -3,10 +3,7 @@ package com.ase.springsecurity;
 import lombok.extern.log4j.Log4j2;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -25,9 +22,8 @@ public class SpringsecurityApplication {
         SpringApplication.run(SpringsecurityApplication.class, args);
 
         log.info("========================= 启动完毕 =========================");
-        log.info("http://localhost:8090/swagger-ui.html");
+        // log.info("http://localhost:8090/swagger-ui.html");
     }
-
 
     /**
      * 显示声明CommonsMultipartResolver为mutipartResolver
