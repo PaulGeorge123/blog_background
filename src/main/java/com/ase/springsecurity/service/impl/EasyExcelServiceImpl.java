@@ -36,15 +36,15 @@ public class EasyExcelServiceImpl implements EasyExcelService {
     private UserMapper userMapper;
 
     /**
-     * @文件下载并
+     * 文件下载
      */
     @Override
     public void template(HttpServletResponse response) throws IOException {
-        response.setContentType("application/vnd.ms-excel");
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8");
         response.setCharacterEncoding("utf-8");
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
         String fileName = URLEncoder.encode("用户信息模板", "UTF-8").replaceAll("\\+", "%20");
-        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+        response.setHeader("Content-disposition",  "attachment;filename*=utf-8''" + fileName + ".xlsx");
         //设置排除属性
         Set<String> set = new HashSet<>();
         set.add("id");
@@ -59,7 +59,7 @@ public class EasyExcelServiceImpl implements EasyExcelService {
     @Override
     public void download(HttpServletResponse response) throws IOException {
         try {
-            response.setContentType("application/vnd.ms-excel");
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8");
             response.setCharacterEncoding("utf-8");
             // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
             String fileName = URLEncoder.encode("用户信息", "UTF-8").replaceAll("\\+", "%20");
